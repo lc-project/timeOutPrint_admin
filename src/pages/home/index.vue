@@ -62,8 +62,9 @@ function add(item) {
 }
 
 function editMaterials(items) {
+  const tempItems = JSON.parse(JSON.stringify(items));
   materialsFrom.value = {
-    ...items,
+    ...tempItems,
   };
   editShow.value = true;
 }
