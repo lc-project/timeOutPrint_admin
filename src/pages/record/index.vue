@@ -16,7 +16,7 @@
       :layouts="['PrevJump', 'PrevPage', 'JumpNumber', 'NextPage', 'NextJump', 'Sizes', 'FullJump', 'Total']"></vxe-pager>
   </div>
 </template>
-
+·
 <script setup>
 import { onMounted, ref } from "vue";
 

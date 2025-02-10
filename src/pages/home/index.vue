@@ -6,7 +6,7 @@
           {{ item.class }}
         </div>
         <div class="addClass">
-          <el-button type="primary" @click="add(item)">添加物料</el-button>
+          <el-button type="primary" @click="add(item)" round>添加物料</el-button>
         </div>
       </div>
       <div class="dataBox">
