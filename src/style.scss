@@ -1,0 +1,124 @@
+html,
+body,
+#app {
+  margin: 0;
+  height: 100%;
+}
+* {
+  box-sizing: border-box;
+}
+.pr {
+  position: relative;
+}
+.pa {
+  position: absolute;
+}
+.pc {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.c {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.f {
+  display: flex;
+}
+.jc {
+  display: flex;
+  justify-content: center;
+}
+.jb {
+  display: flex;
+  justify-content: space-between;
+}
+.ja {
+  display: flex;
+  justify-content: space-around;
+}
+.je {
+  display: flex;
+  justify-content: space-evenly;
+}
+.ac {
+  display: flex;
+  align-items: center;
+}
+.ae {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+}
+.fc {
+  display: flex;
+  flex-direction: column;
+}
+.fcr {
+  display: flex;
+  flex-direction: column-reverse;
+}
+.frr {
+  display: flex;
+  flex-direction: column;
+  flex-direction: row-reverse;
+}
+.nw {
+  display: flex;
+  flex-wrap: nowrap;
+}
+.w {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/* Webkit 浏览器 (Chrome, Safari, Opera) */
+::-webkit-scrollbar {
+  width: 5px; /* 滚动条宽度 */
+  border-radius: 4px; /* 圆角半径 */
+}
+
+::-webkit-scrollbar-track {
+  background: transparent; /* 滚动条背景颜色 */
+  border-radius: 4px; /* 圆角半径 */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c4c4c4; /* 滚动条滑块颜色 */
+  border-radius: 4px; /* 圆角半径 */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #ababab; /* 滚动条滑块悬停时的颜色 */
+  border-radius: 4px; /* 圆角半径 */
+}
+
+.loadingBox {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(255, 255, 255, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .loadingIcon {
+    width: 30px;
+    height: 30px;
+    border: 2px solid #3883fa;
+    border-top-color: transparent;
+    border-radius: 100%;
+    animation: circle infinite 0.75s linear;
+  }
+  @keyframes circle {
+    0% {
+      transform: rotate(0);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+}
