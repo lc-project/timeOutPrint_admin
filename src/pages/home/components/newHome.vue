@@ -1,6 +1,6 @@
 <template>
   <div class="newShow">
-    <el-dialog v-model="homeShow" :title="form.class" style="max-width: 900px">
+    <el-dialog v-model="homeShow" :title="form.class" style="max-width: 1100px">
       <div class="data">
         <el-form :model="form">
           <el-form-item label="物料信息">
@@ -21,7 +21,7 @@
           <el-form-item label="物料名称">
             <el-input v-model="formData.name" placeholder="输入物料名称" />
           </el-form-item>
-          <el-form-item label="效期时间">
+          <el-form-item label="效期时间(天/小时/分/秒/打烊废弃)">
             <el-input v-model="formData.theTerm" placeholder="输入效期时间" />
           </el-form-item>
           <el-form-item label="存储方式">
