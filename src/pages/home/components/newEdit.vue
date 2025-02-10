@@ -1,13 +1,13 @@
 <template>
   <div class="newEdit">
-    <el-dialog v-model="editShow" :title="materialsFrom.name" style="max-width: 900px">
+    <el-dialog v-model="editShow" :title="materialsFrom.name" style="max-width: 1100px">
       <div class="data jb" v-for="(item, index) in materialsFrom.children" :key="index">
         <div class="form">
           <el-form :inline="true" :model="materialsFrom">
             <el-form-item label="物料名称">
               <el-input v-model="item.name" />
             </el-form-item>
-            <el-form-item label="效期时间">
+            <el-form-item label="效期时间(天/小时/分/秒/打烊废弃)">
               <el-input v-model="item.theTerm" style="max-width: 110px" />
             </el-form-item>
             <el-form-item label="存储方式">
