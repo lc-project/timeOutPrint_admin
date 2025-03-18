@@ -34,7 +34,16 @@ export const authRoute = [
     component: () => import("@/pages/home/index.vue"),
     meta: {
       title: "物料信息",
-      icon: "i-analysis",
+      icon: "i-message",
+    },
+  },
+  {
+    path: "/brandManage",
+    name: "brandManage",
+    component: () => import("@/pages/brandManage/index.vue"),
+    meta: {
+      title: "品牌管理",
+      icon: "i-juice",
     },
   },
   {
