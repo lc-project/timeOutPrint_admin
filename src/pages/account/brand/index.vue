@@ -13,9 +13,9 @@
     <vxe-table :column-config="{ resizable: true }" border ref="tableRef" :data="tableData">
       <vxe-column type="seq" width="70"></vxe-column>
       <vxe-column field="username" title="账号"></vxe-column>
+      <vxe-column field="identity" title="身份"></vxe-column>
       <vxe-column field="name" title="名称"></vxe-column>
       <vxe-column field="code" title="店铺编码"></vxe-column>
-      <vxe-column field="storeName" title="店铺名称"></vxe-column>
       <vxe-column field="brandName" title="店铺品牌"></vxe-column>
       <vxe-column title="操作" width="150">
         <template #default="{ row }">
@@ -49,6 +49,8 @@ onMounted(() => {
 });
 function add() {
   form.value = {
+    identity: "品牌管理员",
+    authId: 2,
     state: "新增",
   };
   accountShow.value = true;
@@ -57,6 +59,7 @@ function editEvent(row) {
   form.value = {
     state: "编辑",
     ...row,
+    authId: 2,
     password: "",
   };
   accountShow.value = true;
