@@ -46,4 +46,32 @@ export const authRoute = [
       icon: "i-history",
     },
   },
+  {
+    path: "/account",
+    name: "account",
+    meta: {
+      title: "账号管理",
+      icon: "i-avatar",
+    },
+    children: [
+      {
+        path: "/admin",
+        name: "admin",
+        component: () => import("@/pages/account/admin/index.vue"),
+        meta: {
+          title: "超级管理员",
+          index: 1,
+        },
+      },
+      {
+        path: "/brand",
+        name: "brand",
+        component: () => import("@/pages/account/brand/index.vue"),
+        meta: {
+          title: "品牌管理员",
+          index: 2,
+        },
+      },
+    ],
+  },
 ];

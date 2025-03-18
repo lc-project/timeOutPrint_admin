@@ -31,8 +31,8 @@ const state = ref({
   show: true,
   loginLoading: false,
   user: {
-    username: "admin",
-    password: "123456",
+    username: "",
+    password: "",
   },
   rules: {
     username: [{ required: true, message: "请输入您的账号", trigger: "blur" }],

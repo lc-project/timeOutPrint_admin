@@ -6,6 +6,16 @@
       <vxe-column field="data.name" title="物料名称"></vxe-column>
       <vxe-column field="data.theTerm" title="效期时间"></vxe-column>
       <vxe-column field="data.storage" title="存储方式"></vxe-column>
+      <vxe-column field="data.printTime" title="打印时间">
+        <template #default="{ row }">
+          {{ formatTime(row.data.printTime) }}
+        </template>
+      </vxe-column>
+      <vxe-column field="data.expiredTime" title="过期时间">
+        <template #default="{ row }">
+          {{ formatTime(row.data.expiredTime) }}
+        </template>
+      </vxe-column>
     </vxe-table>
     <vxe-pager
       @page-change="getPrintLog()"
@@ -18,7 +28,11 @@
 </template>
 ·
 <script setup>
+import dayjs from "dayjs";
 import { onMounted, ref } from "vue";
+function formatTime(time) {
+  return dayjs(time).format("YYYY-MM-DD HH:mm:ss");
+}
 
 const tableData = ref([]);
 

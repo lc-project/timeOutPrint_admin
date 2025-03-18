@@ -4,8 +4,9 @@ export default defineStore("home", {
     return {
       tableData: [], //数据
       form: {}, //回显信息
-      materialsFrom:{},//编辑回显数据啊
-      //分页
+      materialsClass: {}, //大类名称
+      materialsFrom: {}, //编辑回显数据啊
+      classData: [], //编辑分类
     };
   },
   actions: {

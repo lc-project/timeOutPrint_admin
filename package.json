@@ -34,7 +34,8 @@
     "vue-router": "^4.4.0",
     "vue3-lottie": "^3.3.1",
     "vxe-pc-ui": "4.3.68",
-    "vxe-table": "4.10.5"
+    "vxe-table": "4.10.5",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.5",
