@@ -12,12 +12,6 @@
           <el-form-item label="用户密码" prop="password">
             <el-input v-model="form.password" placeholder="请输入密码" />
           </el-form-item>
-          <el-form-item label="店铺名称" prop="name" v-if="identity !== '超级管理员'">
-            <el-input v-model="form.name" placeholder="请输入店铺名称" />
-          </el-form-item>
-          <el-form-item label="店铺编码" prop="code" v-if="identity !== '超级管理员'">
-            <el-input v-model="form.code" placeholder="请输入店铺编码" />
-          </el-form-item>
           <el-form-item label="店铺品牌" prop="brandId" v-if="identity !== '超级管理员'">
             <el-input v-model="form.brandName" placeholder="请选择品牌">
               <template #append>
@@ -53,8 +47,6 @@ const rules = ref({
     { required: true, message: "请输入账号", trigger: "blur" },
     { min: 5, max: 20, message: "账号长度为5-20", trigger: "blur" },
   ],
-  name: [{ required: true, message: "请输入店铺名称", trigger: "blur" }],
-  code: [{ required: true, message: "请输入店铺编码", trigger: "blur" }],
   brandId: [{ required: true, message: "请选择品牌", trigger: "blur" }],
 });
 
@@ -69,8 +61,6 @@ function keep() {
             username: form.value.username,
             password: form.value.password,
             authId: form.value.authId,
-            name: form.value.name,
-            code: form.value.code,
             brandId: form.value.brandId,
           })
           .then(({ data }) => {
@@ -87,8 +77,6 @@ function keep() {
             username: form.value.username,
             authId: form.value.authId,
             password: form.value.password,
-            name: form.value.name,
-            code: form.value.code,
             brandId: form.value.brandId,
           })
           .then(({ data }) => {
