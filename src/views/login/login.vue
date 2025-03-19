@@ -1,5 +1,6 @@
 <template>
   <div id="loginPage" v-show="state.show">
+    <loginBg></loginBg>
     <div class="formBox fc c">
       <h1 class="formHeader c">LOGIN</h1>
       <el-form :model="state.user" :rules="state.rules" ref="ruleFormRef" @keydown.enter="handleLogin(ruleFormRef)">
@@ -15,6 +16,17 @@
             <el-input v-model="state.user.password" style="width: 240px" type="password" placeholder="密码"></el-input>
           </div>
         </el-form-item>
+        <el-form-item prop="captcha">
+          <div class="c">
+            <i-shield theme="outline" class="icon" />
+            <el-input v-model="state.user.captcha" style="width: 240px" placeholder="验证码" />
+          </div>
+        </el-form-item>
+        <el-form-item>
+          <div class="c" style="width: 100%">
+            <div @click="resSvg" v-html="svg" class="svg" />
+          </div>
+        </el-form-item>
         <el-form-item>
           <el-button class="loginBtn" type="primary" size="large" :loading="state.loginLoading" @click="handleLogin(ruleFormRef)">登录</el-button>
         </el-form-item>
@@ -24,6 +36,7 @@
 </template>
 
 <script setup>
+import loginBg from "./loginBg.vue";
 import Router from "@/router/index.js";
 import userStore from "@/store/modules/userStore.js";
 const { token, userInfo } = storeToRefs(userStore());
@@ -37,6 +50,7 @@ const state = ref({
   rules: {
     username: [{ required: true, message: "请输入您的账号", trigger: "blur" }],
     password: [{ required: true, message: "请输入密码", trigger: "blur" }],
+    captcha: [{ required: true, message: "请输入验证码", trigger: "blur" }],
   },
 });
 
@@ -47,6 +61,8 @@ function handleLogin(form) {
     if (!valid) return;
     state.value.loginLoading = true;
     const obj = { ...state.value.user };
+    obj.captcha = state.value.user.captcha;
+    obj.originalCaptcha = captcha.value;
     $axios
       .post("/user/login", obj)
       .then(({ data }) => {
@@ -63,9 +79,18 @@ function handleLogin(form) {
       .catch((err) => {
         state.value.show = true;
         state.value.loginLoading = false;
+        resSvg();
       });
   });
 }
+const svg = ref();
+const captcha = ref();
+const resSvg = async () => {
+  let { data } = await $axios.get("/other/getCaptcha");
+  svg.value = data.svg;
+  captcha.value = data.captcha;
+};
+onMounted(() => resSvg());
 </script>
 
 <style lang="scss" scoped>

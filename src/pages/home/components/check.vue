@@ -3,13 +3,13 @@
     <el-dialog v-model="checkShow" title="物料信息" top="1vh" style="width: 90%" @opened="onOpen">
       <div class="jb">
         <div>
-          <el-button type="primary" @click="editClassBtn" v-if="tableData.length > 0">
+          <el-button type="primary" @click="editClassBtn" v-if="props.state == true">
             <template #icon>
               <i-editor theme="outline" size="24" fill="#fff" />
             </template>
             编辑分类
           </el-button>
-          <el-button type="primary" @click="open" v-if="tableData.length == 0">
+          <el-button type="primary" @click="open" v-if="props.state == false">
             <template #icon>
               <i-to-top theme="outline" size="24" fill="#fff" />
             </template>
@@ -17,13 +17,13 @@
           </el-button>
         </div>
         <div>
-          <el-button type="primary" @click="exportBtn" v-if="tableData.length !== 0">
+          <el-button type="primary" @click="exportBtn" v-if="props.state == true">
             <template #icon>
               <i-to-bottom theme="outline" size="24" fill="#fff" />
             </template>
             导出数据
           </el-button>
-          <el-button type="primary" @click="reduction" v-if="tableData.length !== 0">
+          <el-button type="primary" @click="reduction" v-if="props.state == true">
             <template #icon>
               <i-recycle-bin theme="outline" size="24" fill="#fff" />
             </template>
@@ -99,9 +99,15 @@ import home from "../store.js";
 const { tableData, form, materialsFrom, materialsClass, classData, id, ids } = storeToRefs(home());
 import { useFileDialog } from "@vueuse/core";
 const { files, open, reset, onChange } = useFileDialog({
-  multiple: false,
   accept: "xls,xlsx",
   directory: false,
+});
+
+const props = defineProps({
+  state: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const checkShow = defineModel();
@@ -197,13 +203,15 @@ async function readExcel(file) {
         data: tableData,
       })
       .then(({ data }) => {
+        home().getDataApi();
+        checkShow.value = false;
         ElMessage.success("数据导入成功");
       });
     loading.close();
   } catch (error) {
+    checkShow.value = false;
     ElMessage.success("数据导入失败");
   }
-  checkShow.value = false;
 }
 
 function exportBtn() {
