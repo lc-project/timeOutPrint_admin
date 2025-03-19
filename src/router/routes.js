@@ -47,6 +47,15 @@ export const authRoute = [
     },
   },
   {
+    path: "/shop",
+    name: "shop",
+    component: () => import("@/pages/shop/index.vue"),
+    meta: {
+      title: "店铺管理",
+      icon: "i-shop",
+    },
+  },
+  {
     path: "/record",
     name: "record",
     component: () => import("@/pages/record/index.vue"),

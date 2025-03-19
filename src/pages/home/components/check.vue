@@ -1,13 +1,34 @@
 <template>
   <div class="check">
-    <el-dialog v-model="checkShow" title="物料信息" top="1vh" style="width: 90%">
+    <el-dialog v-model="checkShow" title="物料信息" top="1vh" style="width: 90%" @opened="onOpen">
       <div class="jb">
         <div>
-          <el-button type="primary" @click="editClassBtn">编辑分类</el-button>
+          <el-button type="primary" @click="editClassBtn" v-if="tableData.length !== 0">
+            <template #icon>
+              <i-editor theme="outline" size="24" fill="#fff" />
+            </template>
+            编辑分类
+          </el-button>
+          <el-button type="primary" @click="open" v-if="tableData.length == 0">
+            <template #icon>
+              <i-to-top theme="outline" size="24" fill="#fff" />
+            </template>
+            导入数据
+          </el-button>
         </div>
         <div>
-          <el-button type="primary" @click="exportBtn">导出</el-button>
-          <el-button type="primary" @click="reduction">一键还原数据</el-button>
+          <el-button type="primary" @click="exportBtn" v-if="tableData.length !== 0">
+            <template #icon>
+              <i-to-bottom theme="outline" size="24" fill="#fff" />
+            </template>
+            导出数据
+          </el-button>
+          <el-button type="primary" @click="reduction" v-if="tableData.length !== 0">
+            <template #icon>
+              <i-recycle-bin theme="outline" size="24" fill="#fff" />
+            </template>
+            一键还原数据
+          </el-button>
         </div>
       </div>
       <div class="classify">
@@ -56,7 +77,6 @@
           </div>
         </div>
       </div>
-
       <newHome v-model="homeShow" />
       <newEdit v-model="editShow" />
       <updateClass v-model="classShow" />
@@ -68,6 +88,7 @@
 
 <script setup>
 import { onMounted, ref } from "vue";
+import ExcelJS from "exceljs";
 import * as XLSX from "xlsx";
 import newHome from "./newHome.vue";
 import editClass from "./editClass.vue";
@@ -75,12 +96,25 @@ import newEdit from "./newEdit.vue";
 import restoreData from "./restoreData.vue";
 import updateClass from "./updateClass.vue";
 import home from "../store.js";
-const { tableData, form, materialsFrom, materialsClass, classData } = storeToRefs(home());
+const { tableData, form, materialsFrom, materialsClass, classData, id, ids } = storeToRefs(home());
+import { useFileDialog } from "@vueuse/core";
+const { files, open, reset, onChange } = useFileDialog({
+  multiple: false,
+  reset: true,
+  accept: "xls,xlsx",
+  directory: false,
+});
 
 const checkShow = defineModel();
-
-const activeName = ref("固体及粉类");
-const selectedClass = ref("固体及粉类");
+const activeName = ref("");
+const selectedClass = ref("");
+function onOpen() {
+  if (tableData.value.length > 0) {
+    const item = tableData.value[0];
+    activeName.value = item.class;
+    selectedClass.value = item.class;
+  }
+}
 
 const editShow = ref(false);
 const homeShow = ref(false);
@@ -89,7 +123,7 @@ const editClassShow = ref(false);
 const restoreShow = ref(false);
 
 const filteredData = computed(() => {
-  if (selectedClass.value) {
+  if (selectedClass.value && tableData.value) {
     return tableData.value.filter((item) => item.class === selectedClass.value);
   }
   return tableData.value;
@@ -105,6 +139,74 @@ function add(item) {
     class: item.class,
     ...item,
   };
+}
+onChange((files) => {
+  if (files) readExcel(files[0]);
+});
+
+async function readExcel(file) {
+  const loading = ElLoading.service({
+    lock: true,
+    text: "上传文件中...",
+    background: "rgba(0, 0, 0, 0.7)",
+  });
+  const arrayBuffer = await file.arrayBuffer();
+  const tableData = [];
+  const workbook = new ExcelJS.Workbook();
+  try {
+    await workbook.xlsx.load(arrayBuffer);
+    const excelData = workbook.worksheets.map((sheet) => {
+      return sheet.name;
+    });
+    // 获取第一个工作表
+    excelData.forEach((element) => {
+      const worksheet = workbook.getWorksheet(element);
+      // 读取工作表中的数据
+      worksheet?.eachRow({ includeEmpty: false }, (row, rowNumber) => {
+        // 去掉表头
+        if (rowNumber >= 2) {
+          const newData = {
+            name: row.values[2],
+            children: [
+              {
+                name: row.values[2] + "-" + row.values[3],
+                theTerm: row.values[4],
+                storage: row.values[5],
+              },
+            ],
+          };
+          const existingEntryIndex = tableData.findIndex((entry) => entry.class === row.values[1]);
+          if (existingEntryIndex !== -1) {
+            const existingDataEntryIndex = tableData[existingEntryIndex].data.findIndex((dataEntry) => dataEntry.name === row.values[2]);
+            if (existingDataEntryIndex !== -1) {
+              tableData[existingEntryIndex].data[existingDataEntryIndex].children.push(...newData.children);
+            } else {
+              tableData[existingEntryIndex].data.push(newData);
+            }
+          } else {
+            tableData.push({
+              class: row.values[1],
+              data: [newData],
+            });
+          }
+        }
+      });
+    });
+    $axios
+      .post("/printData/importData", {
+        id: ids.value,
+        data: tableData,
+      })
+      .then(({ data }) => {
+        ElMessage.success("数据导入成功");
+        checkShow.value = false;
+        home().getPrintData();
+      });
+    loading.close();
+  } catch (error) {
+    ElMessage.success("数据导入失败");
+  }
+  reset();
 }
 
 function exportBtn() {
@@ -198,6 +300,7 @@ function delMaterials(items) {
     const stop = $dialogLoading();
     $axios
       .post("/printData/addPrintData", {
+        id: id.value,
         data: tableData.value,
       })
       .then(({ data }) => {
@@ -224,7 +327,6 @@ function reduction() {
 <style lang="scss" scoped>
 .check {
   .list {
-  
     .data {
       padding: 10px;
       background-color: rgb(238, 233, 233);

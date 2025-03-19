@@ -2,7 +2,8 @@
   <div class="index">
     <vxe-table :column-config="{ resizable: true }" border :data="brandData">
       <vxe-column type="seq" width="70"></vxe-column>
-      <vxe-column field="name" title="品牌物料"></vxe-column>
+      <vxe-column field="brandName" title="品牌名称"></vxe-column>
+      <vxe-column field="shopName" title="店铺名称"></vxe-column>
       <vxe-column title="操作" width="150">
         <template #default="{ row }">
           <vxe-button mode="text" icon="vxe-icon-eye-fill" style="color: #3883fa; font-weight: 900" @click="check(row)">查看物料信息</vxe-button>
@@ -24,7 +25,7 @@
 import { onMounted } from "vue";
 import checkData from "./components/check.vue";
 import home from "./store.js";
-const { brandData, pageValue,id } = storeToRefs(home());
+const { brandData, pageValue, id, ids } = storeToRefs(home());
 
 const checkShow = ref(false);
 
@@ -33,7 +34,8 @@ onMounted(() => {
 });
 
 function check(row) {
-  id.value = row.id
+  id.value = row.shopId;
+  ids.value = row.id;
   home().getPrintData();
   checkShow.value = true;
 }

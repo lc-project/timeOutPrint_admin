@@ -3,6 +3,7 @@ export default defineStore("home", {
   state() {
     return {
       id: null,
+      ids: null,
       brandData: [],
       tableData: [], //数据
       form: {}, //回显信息

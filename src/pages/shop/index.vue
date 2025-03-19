@@ -1,5 +1,5 @@
 <template>
-  <div class="account">
+  <div class="shop">
     <vxe-toolbar custom ref="toolbarRef">
       <template #buttons>
         <el-button type="primary" @click="add">
@@ -10,12 +10,13 @@
         </el-button>
       </template>
     </vxe-toolbar>
-    <vxe-table :column-config="{ resizable: true }" border ref="tableRef" :data="tableData">
+    <vxe-table :column-config="{ resizable: true }" border ref="tableRef" :data="tableData" style="margin-top: 10px">
       <vxe-column type="seq" width="70"></vxe-column>
-      <vxe-column field="username" title="账号"></vxe-column>
-      <vxe-column field="identity" title="身份"></vxe-column>
+      <vxe-column field="username" title="店铺账号"></vxe-column>
+      <vxe-column field="name" title="店铺名称"></vxe-column>
+      <vxe-column field="code" title="店铺编码"></vxe-column>
       <vxe-column field="brandName" title="店铺品牌"></vxe-column>
-      <vxe-column title="操作" width="150">
+      <vxe-column title="操作" width="200">
         <template #default="{ row }">
           <vxe-button mode="text" icon="vxe-icon-edit" style="color: #3883fa; font-weight: 900" @click="editEvent(row)">编辑</vxe-button>
           <vxe-button mode="text" icon="vxe-icon-delete" style="color: red; font-weight: 900" @click="removeEvent(row)">删除</vxe-button>
@@ -23,45 +24,41 @@
       </vxe-column>
     </vxe-table>
     <vxe-pager
-      @page-change="account().getDataApi()"
+      @page-change="shop().getDataApi()"
       background
       v-model:current-page="pageValue.page"
       v-model:page-size="pageValue.limit"
       :total="pageValue.total"
       :layouts="['PrevJump', 'PrevPage', 'JumpNumber', 'NextPage', 'NextJump', 'Sizes', 'FullJump', 'Total']"></vxe-pager>
-    <newAccount v-model="accountShow" />
+    <newShop v-model="shopShow" />
   </div>
 </template>
 
 <script setup>
-import { onMounted } from "vue";
-import account from "../store.js";
-import newAccount from "../components/newAccount.vue";
-const { tableData, pageValue, identity, accountForm } = storeToRefs(account());
-
-const accountShow = ref(false);
-
+import newShop from "./components/newShop.vue";
+import shop from "./store.js";
+const { tableData, shopForm, pageValue } = storeToRefs(shop());
 onMounted(() => {
-  identity.value = "品牌管理员";
-  account().getDataApi();
+  shop().getDataApi();
 });
+
+const shopShow = ref(false);
+
 function add() {
-  accountForm.value = {
-    identity: "品牌管理员",
-    authId: 2,
+  shopForm.value = {
     state: "新增",
   };
-  accountShow.value = true;
+  shopShow.value = true;
 }
+
 function editEvent(row) {
-  accountForm.value = {
+  shopForm.value = {
     state: "编辑",
     ...row,
-    authId: 2,
-    password: "",
   };
-  accountShow.value = true;
+  shopShow.value = true;
 }
+
 function removeEvent(row) {}
 </script>
 

@@ -3,7 +3,7 @@
     <el-container class="common-layout-container">
       <el-aside class="common-layout-aside" width="200px">
         <div class="sysName c">
-          <span style="margin-left: 5px">效期打印机后台管理</span>
+          <img class="logo" :src="logoIcon" />
         </div>
         <div class="menu">
           <Menu :menuList="userStore.routeData"></Menu>
@@ -26,6 +26,7 @@
 </template>
 
 <script setup>
+import logoIcon from "/public/数挖科技.png";
 import Menu from "@/components/menu/menu.vue";
 import Header from "@/components/header/header.vue";
 import useStore from "@/store/modules/userStore.js";
@@ -62,9 +63,9 @@ async function refresh() {
       text-align: center;
       color: #fff;
       .logo {
-        width: 50px;
-        height: 50px;
-        filter: drop-shadow(4px 4px 4px rgba(0, 0, 0, 0.5));
+        width: 90%;
+        height: 45px;
+        filter: drop-shadow(4px 0px 4px rgba(0, 0, 0, 0.5));
       }
       span {
         margin-top: 5px;

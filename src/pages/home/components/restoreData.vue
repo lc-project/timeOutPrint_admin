@@ -28,6 +28,7 @@
 <script setup>
 import { ref } from "vue";
 import home from "../store.js";
+const { id, ids } = storeToRefs(home());
 const restoreShow = defineModel();
 
 const innerVisible = ref(false);
@@ -38,10 +39,15 @@ function keep() {
     cancelButtonText: "取消",
     type: "warning",
   }).then(async () => {
-    const { data } = await $axios.get("/printList/getPrintList");
+    const { data } = await $axios.get("/printList/getPrintList", {
+      params: {
+        id: ids.value,
+      },
+    });
     const stop = $dialogLoading();
     $axios
       .post("/printData/addPrintData", {
+        id: id.value,
         data: data,
       })
       .then(({ data }) => {

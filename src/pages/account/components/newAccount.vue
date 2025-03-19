@@ -1,19 +1,19 @@
 <template>
   <div class="account">
-    <el-dialog v-model="accountShow" :title="form.state" style="max-width: 600px">
+    <el-dialog v-model="accountShow" :title="accountForm.state" style="max-width: 600px">
       <div class="form">
-        <el-form label-width="auto" :rules="rules" :model="form" ref="formRef">
+        <el-form label-width="auto" :rules="rules" :model="accountForm" ref="formRef">
           <el-form-item label="用户身份" prop="identity" >
-            <el-input v-model="form.identity" placeholder="输入身份"  disabled />
+            <el-input v-model="accountForm.identity" placeholder="输入身份"  disabled />
           </el-form-item>
           <el-form-item label="用户账号" prop="username">
-            <el-input v-model="form.username" placeholder="请输入账号"></el-input>
+            <el-input v-model="accountForm.username" placeholder="请输入账号"></el-input>
           </el-form-item>
           <el-form-item label="用户密码" prop="password">
-            <el-input v-model="form.password" placeholder="请输入密码" />
+            <el-input v-model="accountForm.password" placeholder="请输入密码" />
           </el-form-item>
           <el-form-item label="店铺品牌" prop="brandId" v-if="identity !== '超级管理员'">
-            <el-input v-model="form.brandName" placeholder="请选择品牌">
+            <el-input v-model="accountForm.brandName" placeholder="请选择品牌">
               <template #append>
                 <el-button @click="brandShow = true">选择品牌</el-button>
               </template>
@@ -32,9 +32,9 @@
 </template>
 
 <script setup>
-import brandData from "./brandData.vue";
+import brandData from "@/components/brandSelector/brandData.vue";
 import account from "../store.js";
-const { form, identity } = storeToRefs(account());
+const { accountForm, identity } = storeToRefs(account());
 
 const formRef = ref(null);
 
@@ -54,14 +54,14 @@ function keep() {
   formRef.value.validate(async (valid) => {
     if (valid) {
       const stop = $dialogLoading();
-      if (!form.value.id) {
+      if (!accountForm.value.id) {
         $axios
           .post("/account/saveAccount", {
-            identity: form.value.identity,
-            username: form.value.username,
-            password: form.value.password,
-            authId: form.value.authId,
-            brandId: form.value.brandId,
+            identity: accountForm.value.identity,
+            username: accountForm.value.username,
+            password: accountForm.value.password,
+            authId: accountForm.value.authId,
+            brandId: accountForm.value.brandId,
           })
           .then(({ data }) => {
             stop();
@@ -72,12 +72,12 @@ function keep() {
       } else {
         $axios
           .post("/account/updateAccount", {
-            id: form.value.id,
-            identity: form.value.identity,
-            username: form.value.username,
-            authId: form.value.authId,
-            password: form.value.password,
-            brandId: form.value.brandId,
+            id: accountForm.value.id,
+            identity: accountForm.value.identity,
+            username: accountForm.value.username,
+            authId: accountForm.value.authId,
+            password: accountForm.value.password,
+            brandId: accountForm.value.brandId,
           })
           .then(({ data }) => {
             stop();

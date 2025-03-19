@@ -26,7 +26,7 @@
 import { onMounted } from "vue";
 import account from "../store.js";
 import newAccount from "../components/newAccount.vue";
-const { tableData, pageValue, identity, form } = storeToRefs(account());
+const { tableData, pageValue, identity, accountForm } = storeToRefs(account());
 
 const accountShow = ref(false);
 
@@ -36,7 +36,7 @@ onMounted(() => {
 });
 
 function editEvent(row) {
-  form.value = {
+  accountForm.value = {
     state: "编辑",
     authId: 1,
     ...row,

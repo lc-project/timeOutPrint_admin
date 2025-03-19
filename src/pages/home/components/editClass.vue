@@ -24,7 +24,7 @@
 
 <script setup>
 import home from "../store.js";
-const { classData } = storeToRefs(home());
+const { classData, id } = storeToRefs(home());
 const editClassShow = defineModel();
 
 function addNewClass() {
@@ -47,6 +47,7 @@ function keep() {
     const stop = $dialogLoading();
     $axios
       .post("/printData/addPrintData", {
+        id: id.value,
         data: classData.value,
       })
       .then(({ data }) => {

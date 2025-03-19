@@ -2,7 +2,7 @@
   <div class="record">
     <vxe-table :data="tableData">
       <vxe-column type="seq" width="70"></vxe-column>
-      <vxe-column field="name" title="用户"></vxe-column>
+      <vxe-column field="name" title="品牌"></vxe-column>
       <vxe-column field="data.name" title="物料名称"></vxe-column>
       <vxe-column field="data.theTerm" title="效期时间"></vxe-column>
       <vxe-column field="data.storage" title="存储方式"></vxe-column>

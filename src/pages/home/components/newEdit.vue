@@ -4,7 +4,7 @@
       <div class="data jb" v-for="(item, index) in materialsFrom.children" :key="index">
         <div class="form">
           <el-form :inline="true" :model="materialsFrom">
-            <el-form-item label="物料名称">
+            <el-form-item label="物料名称(名称-状态)">
               <el-input v-model="item.name" />
             </el-form-item>
             <el-form-item label="效期时间(天/小时/分/秒/打烊废弃)">
@@ -30,7 +30,7 @@
 
 <script setup>
 import home from "../store.js";
-const { tableData, materialsFrom } = storeToRefs(home());
+const { tableData, materialsFrom, id } = storeToRefs(home());
 
 const editShow = defineModel();
 
@@ -61,6 +61,7 @@ function keep() {
   const stop = $dialogLoading();
   $axios
     .post("/printData/addPrintData", {
+      id: id.value,
       data: tableData.value,
     })
     .then(({ data }) => {

@@ -23,7 +23,7 @@
 import { storeToRefs } from "pinia";
 import home from "../store.js";
 
-const { tableData, materialsClass } = storeToRefs(home());
+const { tableData, materialsClass, id } = storeToRefs(home());
 
 const classShow = defineModel();
 
@@ -37,6 +37,7 @@ function keep() {
   const stop = $dialogLoading();
   $axios
     .post("/printData/addPrintData", {
+      id: id.value,
       data: tableData.value,
     })
     .then(({ data }) => {

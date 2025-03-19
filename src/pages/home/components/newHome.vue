@@ -16,7 +16,7 @@
               <el-option v-for="item in form.data" :key="item.name" :label="item.name" :value="item.name" />
             </el-select>
           </el-form-item>
-          <el-form-item label="物料名称" prop="name">
+          <el-form-item label="物料名称(名称-状态)" prop="name">
             <el-input v-model="formData.name" placeholder="输入物料名称" />
           </el-form-item>
           <el-form-item label="效期时间(天/小时/分/秒/打烊废弃)" prop="theTerm">
@@ -38,7 +38,7 @@
 
 <script setup>
 import home from "../store.js";
-const { tableData, form } = storeToRefs(home());
+const { tableData, form, id } = storeToRefs(home());
 const homeShow = defineModel();
 
 const ruleFormRef = ref(null);
@@ -107,6 +107,7 @@ async function keep(formEl) {
       const stop = $dialogLoading();
       $axios
         .post("/printData/addPrintData", {
+          id: id.value,
           data: tableData.value,
         })
         .then(({ data }) => {

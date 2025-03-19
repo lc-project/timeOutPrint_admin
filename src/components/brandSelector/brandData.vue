@@ -11,15 +11,19 @@
 <script setup>
 import { ref } from "vue";
 import brand from "@/pages/brandManage/index.vue";
-import account from "../store.js";
-const { form } = storeToRefs(account());
+import account from "@/pages/account/store.js";
+const { accountForm } = storeToRefs(account());
+import shop from "@/pages/shop/store.js";
+const { shopForm } = storeToRefs(shop());
 const type = ref(true);
 
 const brandShow = defineModel();
 
 function setBrand(value) {
-  form.value.brandId = value.id;
-  form.value.brandName = value.name;
+  accountForm.value.brandId = value.id;
+  accountForm.value.brandName = value.name;
+  shopForm.value.brandId = value.id;
+  shopForm.value.brandName = value.name;
   brandShow.value = false;
 }
 </script>
