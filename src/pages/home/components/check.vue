@@ -3,7 +3,7 @@
     <el-dialog v-model="checkShow" title="物料信息" top="1vh" style="width: 90%" @opened="onOpen">
       <div class="jb">
         <div>
-          <el-button type="primary" @click="editClassBtn" v-if="tableData.length !== 0">
+          <el-button type="primary" @click="editClassBtn" v-if="tableData.length > 0">
             <template #icon>
               <i-editor theme="outline" size="24" fill="#fff" />
             </template>
@@ -100,7 +100,6 @@ const { tableData, form, materialsFrom, materialsClass, classData, id, ids } = s
 import { useFileDialog } from "@vueuse/core";
 const { files, open, reset, onChange } = useFileDialog({
   multiple: false,
-  reset: true,
   accept: "xls,xlsx",
   directory: false,
 });
@@ -199,14 +198,12 @@ async function readExcel(file) {
       })
       .then(({ data }) => {
         ElMessage.success("数据导入成功");
-        checkShow.value = false;
-        home().getPrintData();
       });
     loading.close();
   } catch (error) {
     ElMessage.success("数据导入失败");
   }
-  reset();
+  checkShow.value = false;
 }
 
 function exportBtn() {

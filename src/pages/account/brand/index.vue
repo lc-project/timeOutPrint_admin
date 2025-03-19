@@ -62,7 +62,29 @@ function editEvent(row) {
   };
   accountShow.value = true;
 }
-function removeEvent(row) {}
+function removeEvent(row) {
+  const id = row.id;
+  ElMessageBox.confirm("是否删除", {
+    confirmButtonText: "删除",
+    cancelButtonText: "取消",
+    type: "warning",
+  }).then(() => {
+    $axios
+      .post("/account/delAccount", {
+        id: id,
+      })
+      .then(() => {
+        if (tableData.value.length === 1 && pageValue.value.page !== 1) {
+          pageValue.value.page--;
+        }
+        ElMessage({
+          message: "删除成功",
+          type: "success",
+        });
+        account().getDataApi();
+      });
+  });
+}
 </script>
 
 <style lang="scss" scoped></style>
