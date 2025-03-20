@@ -18,7 +18,7 @@
     "@wangeditor/editor-for-vue": "^5.1.12",
     "axios": "^1.7.2",
     "dayjs": "^1.11.13",
-    "echarts": "^5.5.1",
+    "echarts": "^5.6.0",
     "element-china-area-data": "^6.1.0",
     "element-plus": "^2.7.7",
     "exceljs": "^4.4.0",

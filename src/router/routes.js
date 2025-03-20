@@ -29,6 +29,15 @@ export const otherRoute = [];
 
 export const authRoute = [
   {
+    path: "/statistics",
+    name: "statistics",
+    component: () => import("@/pages/statistics/index.vue"),
+    meta: {
+      title: "统计",
+      icon: "i-excel",
+    },
+  },
+  {
     path: "/home",
     name: "home",
     component: () => import("@/pages/home/index.vue"),
