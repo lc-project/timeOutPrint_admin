@@ -12,9 +12,9 @@
         </div>
         <div class="content">
           <div class="time">
-            <el-date-picker v-model="start" type="datetime" placeholder="开始时间" format="YYYY/MM/DD hh:mm:ss" value-format="x" />
+            <el-date-picker v-model="start" type="datetime" placeholder="上传开始时间" format="YYYY/MM/DD hh:mm:ss" value-format="x" />
             <span>~</span>
-            <el-date-picker v-model="finish" type="datetime" placeholder="截止时间" format="YYYY/MM/DD hh:mm:ss" value-format="x" />
+            <el-date-picker v-model="finish" type="datetime" placeholder="上传截止时间" format="YYYY/MM/DD hh:mm:ss" value-format="x" />
             <el-button type="primary" round style="margin-left: 10px" @click="searchBtn">
               <template #icon>
                 <i-search theme="outline" size="24" fill="#fff" />
@@ -41,7 +41,10 @@
                           {{ item.data.categories }}
                         </span>
                       </div>
-                      <div class="isExpired">{{ item.stateTitle }}</div>
+                      <div class="isExpired">
+                        <el-tag v-if="item.stateTitle == '未过期'" round>{{ item.stateTitle }}</el-tag>
+                        <el-tag type="danger" v-if="item.stateTitle == '已过期'" round>{{ item.stateTitle }}</el-tag>
+                      </div>
                     </div>
                     <div class="materialsInfo">
                       <span>{{ item.data.name }}</span>
@@ -78,7 +81,14 @@ const finish = ref("");
 function searchBtn() {
   startTime.value = start.value;
   finishTime.value = finish.value;
-  validityPeriod().getValidityPeriod();
+  if (finishTime.value < startTime.value) {
+    ElMessage({
+      message: "截止日期不能小于开始日期",
+      type: "warning",
+    });
+  } else {
+    validityPeriod().getValidityPeriod();
+  }
 }
 function reset() {
   start.value = "";
@@ -186,7 +196,7 @@ function onOpen() {
         }
         .expired {
           box-shadow: 0 0 20px 0 red;
-          border: 1px solid red;
+          border: 2px solid red;
         }
         .notExpired {
           border: 1px solid rgba(14, 13, 13, 0.5);

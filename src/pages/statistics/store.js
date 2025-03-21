@@ -2,8 +2,8 @@ import { defineStore } from "pinia";
 export default defineStore("statistics", {
   state() {
     return {
-      pieChartData: [], 
-      foldingLineData:[],
+      pieChartData: [],
+      foldingLineData: [],
     };
   },
   actions: {

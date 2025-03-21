@@ -12,9 +12,9 @@
           {{ formatTime(row.data.printTime) }}
         </template>
       </vxe-column>
-      <vxe-column field="data.expiredTime" title="过期时间">
+      <vxe-column field="data.expireTime" title="过期时间">
         <template #default="{ row }">
-          {{ formatTime(row.data.expiredTime) }}
+          {{ formatTime(row.data.expireTime) }}
         </template>
       </vxe-column>
     </vxe-table>
