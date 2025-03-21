@@ -1,14 +1,23 @@
 <template>
   <div class="lineChart">
     <div id="container" style="height: 700px"></div>
+    {{ foldingLineData }}
   </div>
 </template>
 
 <script setup>
 import { ref } from "vue";
 import * as echarts from "echarts";
+import statistics from "../store.js";
+const { foldingLineData } = storeToRefs(statistics());
 
 onMounted(() => {
+  statistics().getDataApi();
+  lineChart();
+});
+
+function lineChart() {
+  console.log("%c Line:20 🍰", "background:#4fff4B",foldingLineData.value);
   let dom = document.getElementById("container");
   let myChart = echarts.init(dom, null, {
     renderer: "canvas",
@@ -34,7 +43,8 @@ onMounted(() => {
   if (option && typeof option === "object") {
     myChart.setOption(option);
   }
-});
+}
+
 </script>
 
 <style lang="scss" scoped>

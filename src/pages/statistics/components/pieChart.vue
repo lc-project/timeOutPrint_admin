@@ -1,24 +1,29 @@
 <template>
   <div class="pieChart">
     <div id="foldingLine" style="height: 800px"></div>
+    {{ pieChartData }}
   </div>
 </template>
 
 <script setup>
 import { ref } from "vue";
 import * as echarts from "echarts";
+import statistics from "../store.js";
+const { pieChartData } = storeToRefs(statistics());
 
 onMounted(() => {
+  statistics().getDataApi();
+  foldingLine();
+});
+
+function foldingLine() {
   let dom = document.getElementById("foldingLine");
-  let myChart = echarts.init(dom, null, {
-    renderer: "canvas",
-    useDirtyRect: false,
-  });
+  let myChart = echarts.init(dom, null, {});
   let option;
   option = {
     title: {
-      text: "打印数据状态图",
-      subtext: "数据",
+      text: "打印数据状态图信息",
+      subtext: "状态数据",
       left: "center",
     },
     tooltip: {
@@ -53,7 +58,8 @@ onMounted(() => {
   if (option && typeof option === "object") {
     myChart.setOption(option);
   }
-});
+}
+
 </script>
 
 <style lang="scss" scoped></style>

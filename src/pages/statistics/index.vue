@@ -15,16 +15,7 @@
 import { onMounted, ref } from "vue";
 import lineChart from "./components/lineChart.vue";
 import pieChart from "./components/pieChart.vue";
-onMounted(() => {
-  getData();
-});
 
-async function getData() {
-  const { data } = await $axios.get("/printData/getPrintData");
-  console.log("%c Line:21 🥝 data", "background:#b03734", data);
-}
-
-// const dataStatistics = 
 </script>
 
 <style lang="scss" scoped>

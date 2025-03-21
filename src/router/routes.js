@@ -74,6 +74,15 @@ export const authRoute = [
     },
   },
   {
+    path: "/validityPeriod",
+    name: "validityPeriod",
+    component: () => import("@/pages/validityPeriod/index.vue"),
+    meta: {
+      title: "效期图片",
+      icon: "i-pic",
+    },
+  },
+  {
     path: "/account",
     name: "account",
     meta: {

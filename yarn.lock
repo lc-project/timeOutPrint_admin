@@ -2138,6 +2138,11 @@ vue-router@^4.4.0:
   dependencies:
     "@vue/devtools-api" "^6.5.1"
 
+vue-waterfall-plugin-next@2.6.4:
+  version "2.6.4"
+  resolved "https://registry.npmjs.org/vue-waterfall-plugin-next/-/vue-waterfall-plugin-next-2.6.4.tgz#747dbcbee097f6384d9280432fb7da046d28b41a"
+  integrity sha512-pQVecCaN4nnk48p5OlMTaMwk7ECtRbEFfMDPNIzARFXEYaIiEVc9ODQZNgGaGzFCML3AClIwEGSKu/uYOvP8sQ==
+
 vue3-lottie@^3.3.1:
   version "3.3.1"
   resolved "https://registry.npmmirror.com/vue3-lottie/-/vue3-lottie-3.3.1.tgz#df8ab61f5a8f7e03442fe5153fa766d879691037"
