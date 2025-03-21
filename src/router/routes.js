@@ -29,6 +29,15 @@ export const otherRoute = [];
 
 export const authRoute = [
   {
+    path: "/statistics",
+    name: "statistics",
+    component: () => import("@/pages/statistics/index.vue"),
+    meta: {
+      title: "统计",
+      icon: "i-excel",
+    },
+  },
+  {
     path: "/home",
     name: "home",
     component: () => import("@/pages/home/index.vue"),
@@ -62,6 +71,15 @@ export const authRoute = [
     meta: {
       title: "打印记录",
       icon: "i-history",
+    },
+  },
+  {
+    path: "/validityPeriod",
+    name: "validityPeriod",
+    component: () => import("@/pages/validityPeriod/index.vue"),
+    meta: {
+      title: "效期图片",
+      icon: "i-pic",
     },
   },
   {

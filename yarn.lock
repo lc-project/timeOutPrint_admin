@@ -994,13 +994,13 @@ duplexer2@~0.1.4:
   dependencies:
     readable-stream "^2.0.2"
 
-echarts@^5.5.1:
-  version "5.5.1"
-  resolved "https://registry.npmjs.org/echarts/-/echarts-5.5.1.tgz"
-  integrity sha512-Fce8upazaAXUVUVsjgV6mBnGuqgO+JNDlcgF79Dksy4+wgGpQB2lmYoO4TSweFg/mZITdpGHomw/cNBJZj1icA==
+echarts@^5.6.0:
+  version "5.6.0"
+  resolved "https://registry.npmjs.org/echarts/-/echarts-5.6.0.tgz#2377874dca9fb50f104051c3553544752da3c9d6"
+  integrity sha512-oTbVTsXfKuEhxftHqL5xprgLoc0k7uScAwtryCgWF6hPYFLRwOUHiFmHGCBKP5NPFNkDVopOieyUqYGH8Fa3kA==
   dependencies:
     tslib "2.3.0"
-    zrender "5.6.0"
+    zrender "5.6.1"
 
 element-china-area-data@^6.1.0:
   version "6.1.0"
@@ -2138,6 +2138,11 @@ vue-router@^4.4.0:
   dependencies:
     "@vue/devtools-api" "^6.5.1"
 
+vue-waterfall-plugin-next@2.6.4:
+  version "2.6.4"
+  resolved "https://registry.npmjs.org/vue-waterfall-plugin-next/-/vue-waterfall-plugin-next-2.6.4.tgz#747dbcbee097f6384d9280432fb7da046d28b41a"
+  integrity sha512-pQVecCaN4nnk48p5OlMTaMwk7ECtRbEFfMDPNIzARFXEYaIiEVc9ODQZNgGaGzFCML3AClIwEGSKu/uYOvP8sQ==
+
 vue3-lottie@^3.3.1:
   version "3.3.1"
   resolved "https://registry.npmmirror.com/vue3-lottie/-/vue3-lottie-3.3.1.tgz#df8ab61f5a8f7e03442fe5153fa766d879691037"
@@ -2234,9 +2239,9 @@ zip-stream@^4.1.0:
     compress-commons "^4.1.2"
     readable-stream "^3.6.0"
 
-zrender@5.6.0:
-  version "5.6.0"
-  resolved "https://registry.npmjs.org/zrender/-/zrender-5.6.0.tgz"
-  integrity sha512-uzgraf4njmmHAbEUxMJ8Oxg+P3fT04O+9p7gY+wJRVxo8Ge+KmYv0WJev945EH4wFuc4OY2NLXz46FZrWS9xJg==
+zrender@5.6.1:
+  version "5.6.1"
+  resolved "https://registry.npmjs.org/zrender/-/zrender-5.6.1.tgz#e08d57ecf4acac708c4fcb7481eb201df7f10a6b"
+  integrity sha512-OFXkDJKcrlx5su2XbzJvj/34Q3m6PvyCZkVPHGYpcCJ52ek4U/ymZyfuV1nKE23AyBJ51E/6Yr0mhZ7xGTO4ag==
   dependencies:
     tslib "2.3.0"

@@ -17,7 +17,7 @@
       v-model:page-size="pageValue.limit"
       :total="pageValue.total"
       :layouts="['PrevJump', 'PrevPage', 'JumpNumber', 'NextPage', 'NextJump', 'Sizes', 'FullJump', 'Total']"></vxe-pager>
-    <checkData v-model="checkShow" />
+    <checkData v-model="checkShow" :state="state" />
   </div>
 </template>
 
@@ -33,7 +33,14 @@ onMounted(() => {
   home().getDataApi();
 });
 
+const state = ref(false);
+
 function check(row) {
+  if (!row.data) {
+    state.value = false;
+  } else {
+    state.value = true;
+  }
   id.value = row.shopId;
   ids.value = row.id;
   home().getPrintData();
