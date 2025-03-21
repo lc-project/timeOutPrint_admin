@@ -6,7 +6,7 @@ export default defineStore("validityPeriod", {
       tableData: [], //数据
       pictureForm: [], //图片数据
       startTime: "",
-      finishTime,
+      finishTime: "",
       //分页
       pageValue: {
         page: 1,
@@ -39,7 +39,12 @@ export default defineStore("validityPeriod", {
           finishTime: this.finishTime,
         },
       });
-      this.pictureForm = data;
+      this.pictureForm = data.map((item) => {
+        return {
+          ...item,
+          data: JSON.parse(item.data),
+        };
+      });
     },
   },
   persist: false,
