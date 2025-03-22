@@ -1,25 +1,35 @@
 <template>
   <div class="pieChart">
     <div id="foldingLine" style="height: 800px"></div>
-    {{ pieChartData }}
   </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted, watch } from "vue";
 import * as echarts from "echarts";
 import statistics from "../store.js";
 const { pieChartData } = storeToRefs(statistics());
 
 onMounted(() => {
   statistics().getDataApi();
-  foldingLine();
+});
+
+watch(pieChartData, (newData) => {
+  if (newData && newData.length > 0) {
+    foldingLine();
+  }
 });
 
 function foldingLine() {
   let dom = document.getElementById("foldingLine");
   let myChart = echarts.init(dom, null, {});
   let option;
+
+  const chartData = pieChartData.value.map((item) => ({
+    value: item.count,
+    name: item.title,
+  }));
+
   option = {
     title: {
       text: "打印数据状态图信息",
@@ -38,12 +48,7 @@ function foldingLine() {
         name: "Access From",
         type: "pie",
         radius: "50%",
-        data: [
-          { value: 1048, name: "被删除" },
-          { value: 735, name: "报损" },
-          { value: 580, name: "正常" },
-          { value: 484, name: "已处理" },
-        ],
+        data: chartData,
         emphasis: {
           itemStyle: {
             shadowBlur: 10,
@@ -59,7 +64,6 @@ function foldingLine() {
     myChart.setOption(option);
   }
 }
-
 </script>
 
 <style lang="scss" scoped></style>
