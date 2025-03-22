@@ -31,13 +31,13 @@
           <el-empty v-if="pictureForm.length == 0" description="暂无数据" />
           <Waterfall v-else :list="pictureForm" class="imge">
             <template #default="{ item, url, index }">
-              <div :class="['card', item.stateTitle === '已过期' ? 'expired' : 'notExpired']">
+              <div :class="['card', item.stateTitle === '已过期' || item.stateTitle === '未识别到二维码' ? 'expired' : 'notExpired']">
                 <LazyImg class="cardImg" :url="item.url" />
                 <div class="overlay ac">
                   <div class="overlayBox">
                     <div class="jb">
                       <div class="classInfo">
-                        <span>
+                        <span v-if="item.data">
                           {{ item.data.categories }}
                         </span>
                       </div>
@@ -45,13 +45,14 @@
                         <el-tag v-if="item.stateTitle == '未过期'" round>{{ item.stateTitle }}</el-tag>
                         <el-tag type="danger" v-if="item.stateTitle == '已过期'" round>{{ item.stateTitle }}</el-tag>
                       </div>
+                      <el-tag style="margin-left: 10px;" type="danger" v-if="item.stateTitle == '未识别到二维码'" round>{{ item.stateTitle }}</el-tag>
                     </div>
                     <div class="materialsInfo">
-                      <span>{{ item.data.name }}</span>
-                      <span>{{ item.data.storage }}</span>
-                      <span>{{ item.data.theTerm }}</span>
+                      <span v-if="item.data">{{ item.data.name }}</span>
+                      <span v-if="item.data">{{ item.data.storage }}</span>
+                      <span v-if="item.data">{{ item.data.theTerm }}</span>
                     </div>
-                    <div class="timeInfo">
+                    <div class="timeInfo" v-if="item.data">
                       <span>上传时间：{{ dayjs(item.uploadTime).format("YY/MM-DD HH:mm") }}</span>
                       <span>到期时间：{{ dayjs(item.data.expireTime).format("YY/MM-DD HH:mm") }}</span>
                     </div>
@@ -111,7 +112,7 @@ function onOpen() {
   pictureForm.value.forEach((item) => {
     if (item.stateTitle === "未过期") {
       notExpired.value++;
-    } else if (item.stateTitle === "已过期") {
+    } else if (item.stateTitle === "已过期" || item.stateTitle === "未识别到二维码") {
       expired.value++;
     }
     if (item.data && item.data.categories) {
@@ -195,11 +196,9 @@ function onOpen() {
           }
         }
         .expired {
-          box-shadow: 0 0 20px 0 red;
-          border: 2px solid red;
+          border: 5px solid red;
         }
         .notExpired {
-          border: 1px solid rgba(14, 13, 13, 0.5);
         }
       }
     }

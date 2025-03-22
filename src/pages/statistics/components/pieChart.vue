@@ -45,7 +45,7 @@ function foldingLine() {
     },
     series: [
       {
-        name: "Access From",
+        name: "数据",
         type: "pie",
         radius: "50%",
         data: chartData,
