@@ -83,6 +83,15 @@ export const authRoute = [
     },
   },
   {
+    path: "/printAppVersion",
+    name: "printAppVersion",
+    component: () => import("@/pages/printAppVersion/index.vue"),
+    meta: {
+      title: "效期软件管理",
+      icon: "i-android",
+    },
+  },
+  {
     path: "/account",
     name: "account",
     meta: {
